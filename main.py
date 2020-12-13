@@ -1,20 +1,30 @@
 import argparse
 import configparser
+from lib.database import DatabaseManager
 import discord
 import sys
 import asyncio
 import sqlite3
 from ast import literal_eval
-import requests
 import logging
 import datetime
 import time
+import requests
+import platform
+import pathlib
 
 
 client = discord.Client()
 file_path = ''
-db=sqlite3.connect('{}/pinarchiver_config.db'.format(file_path))
+our_platform = platform.platform()
+path = pathlib.Path(__file__).parent.absolute()
+if our_platform == "Windows":
+    db=sqlite3.connect(rf'{path}\db\pinarchiver_config.db')
+else:
+    db=sqlite3.connect('{}/pinarchiver_config.db'.format(file_path))
+our_db = DatabaseManager(rf'{path}\db\pinarchiver_config.db')
 cursor = db.cursor()
+print('{}/pinarchiver_config.db'.format(file_path))
 config = None
 TOKEN = None
 DBLTOKEN = None
@@ -256,8 +266,8 @@ async def on_message(message):
                 await error(message, 'The react count must be an integer greater than 0 and less than 1000.')
 
             else:
-                cursor.execute('''INSERT OR REPLACE INTO config_settings(guild_id, react_count) VALUES(?,?)''', (message.guild.id, react_count_config))
-                db.commit()
+                our_db.create_table("""CREATE TABLE IF NOT EXISTS config_settings(guild_id text, react_count integer)""")
+                our_db.insert_react_value(message.guild.id, react_count_config)
 
                 emb = discord.Embed(
                     description='React count has been set to {}'.format(str(react_count_config)),
