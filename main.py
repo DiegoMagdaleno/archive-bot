@@ -1,6 +1,6 @@
 import argparse
 import configparser
-from lib.database import DatabaseManager
+from helpers.database import DatabaseManager
 import discord
 import sys
 import asyncio
@@ -15,16 +15,16 @@ import pathlib
 
 
 client = discord.Client()
-file_path = ''
+
 our_platform = platform.platform()
 path = pathlib.Path(__file__).parent.absolute()
-if our_platform == "Windows":
-    db=sqlite3.connect(rf'{path}\db\pinarchiver_config.db')
+
+if our_platform is 'Windows':
+    database_file = rf'{path}\db\pinarchiver_config.db'
 else:
-    db=sqlite3.connect('{}/pinarchiver_config.db'.format(file_path))
+    database_file = f'{path}/db/pinarchiver_config.db'
 our_db = DatabaseManager(rf'{path}\db\pinarchiver_config.db')
-cursor = db.cursor()
-print('{}/pinarchiver_config.db'.format(file_path))
+
 config = None
 TOKEN = None
 DBLTOKEN = None
