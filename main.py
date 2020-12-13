@@ -53,7 +53,6 @@ async def on_ready():
     """Print a startup message."""
     print(str(client.user) + ' is online.')
     await client.change_presence(activity=discord.Game(name='v2.0 | +help'))
-    await guild_count_update()
 
 @client.event
 async def on_guild_join(guild):
