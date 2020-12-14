@@ -1,3 +1,8 @@
+THIS BOT IS BROKEN AND THE LACK OF LICENSE DOESNT ALLOW ME TO 
+FIX IT IN A PROPER WAY.
+
+USE CHEEMS-BOT INSTEAD
+
 ![pinArchiver Banner](https://i.imgur.com/OhpJKc1.jpg)
 # Discord Pin Archiver Bot
 
